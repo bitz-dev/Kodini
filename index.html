@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kodini - Assamese Inspired Coding Language</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Recursive:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0a0a;
+      --bg-darker: #050505;
+      --bg-light: #1a1a1a;
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0a0;
+      --accent: #ffffff;
+      --border: #333333;
+      --hover: #2a2a2a;
+      --success: #51cf66;
+      --error: #ff6b6b;
+      --info: #339af0;
+      --gradient-start: #00ff88;
+      --gradient-end: #00ccff;
+      --cursor-blue: #0066ff;
+      --cursor-dark: #0a0a0a;
+      --cursor-light: #1a1a1a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cursor-dark);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 20% 20%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(0, 204, 255, 0.1) 0%, transparent 50%);
+      padding: 0 2rem;
+      position: relative;
+    }
+
+    /* Grain effect */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.05;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 0.8rem 2rem;
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      right: 2rem;
+      z-index: 999;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    nav.hidden {
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    nav h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+      transition: transform 0.3s ease;
+    }
+
+    nav:hover h1 {
+      transform: scale(1.05);
+    }
+
+    nav button {
+      background: var(--cursor-blue);
+      border: none;
+      color: var(--text-primary);
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    nav button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      transition: 0.5s;
+    }
+
+    nav button:hover::before {
+      left: 100%;
+    }
+
+    nav button:hover {
+      background: #0052cc;
+      transform: translateY(-1px);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 15rem 0 1rem 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    section {
+      margin-bottom: 6rem;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h2 {
+      color: var(--text-primary);
+      font-size: 2.2rem;
+      margin-bottom: 2.5rem;
+      font-weight: 800;
+      text-align: center;
+      position: relative;
+      display: block;
+      font-family: 'Recursive', sans-serif;
+      background: linear-gradient(to bottom, #ffffff 0%, #ffffff 60%, #000000 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+      width: 100%;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 2px;
+      background: linear-gradient(to right, #ffffff, #000000);
+      transition: width 0.3s ease;
+    }
+
+    h2:hover::after {
+      width: 100px;
+    }
+
+    p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.7;
+      text-align: left;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    pre {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      color: var(--text-primary);
+      overflow-x: auto;
+      border-radius: 8px;
+      font-family: 'Consolas', monospace;
+      line-height: 1.6;
+      font-size: 0.95rem;
+      margin: 1.5rem 0;
+    }
+
+    .quote {
+      font-style: italic;
+      color: var(--text-primary);
+      padding: 1.5rem;
+      border-left: 3px solid var(--cursor-blue);
+      margin: 1.5rem 0;
+      background: rgba(0, 102, 255, 0.05);
+      border-radius: 0 8px 8px 0;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 1.5rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+    }
+
+    ul li {
+      color: var(--text-secondary);
+      margin-bottom: 0.8rem;
+      position: relative;
+      padding-left: 2rem;
+      font-size: 1.1rem;
+    }
+
+    ul li:before {
+      content: "•";
+      color: var(--text-primary);
+      position: absolute;
+      left: 0;
+      font-size: 1.5rem;
+    }
+
+    textarea {
+      width: 100%;
+      height: 300px;
+      font-size: 14px;
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text-primary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 1.5rem;
+      font-family: 'Consolas', monospace;
+      resize: vertical;
+      transition: all 0.3s ease;
+      line-height: 1.6;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--cursor-blue);
+      box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.2);
+    }
+
+    #output {
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text-primary);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1.5rem;
+      min-height: 200px;
+      max-height: 400px;
+      overflow-y: auto;
+      font-family: 'Consolas', monospace;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.95rem;
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #output::before {
+      content: "Terminal";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
+      padding: 0.8rem 1.5rem;
+      font-size: 0.9rem;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-weight: 500;
+    }
+
+    #output-content {
+      margin-top: 3rem;
+      padding: 0 1.5rem;
+      white-space: pre-wrap;
+    }
+
+    .terminal-prompt {
+      color: var(--text-primary);
+      margin-bottom: 0.8rem;
+      font-family: 'Consolas', monospace;
+    }
+
+    .terminal-prompt::before {
+      content: ">";
+      color: var(--cursor-blue);
+      margin-right: 0.5rem;
+      font-weight: bold;
+    }
+
+    .terminal-error {
+      color: var(--error);
+      font-weight: 500;
+      padding: 0.8rem;
+      background: rgba(255, 107, 107, 0.1);
+      border-radius: 8px;
+      margin: 0.5rem 0;
+    }
+
+    .terminal-success {
+      color: var(--success);
+      font-weight: 500;
+      padding: 0.8rem;
+      background: rgba(81, 207, 102, 0.1);
+      border-radius: 8px;
+      margin: 0.5rem 0;
+    }
+
+    .terminal-info {
+      color: var(--info);
+      font-weight: 500;
+      padding: 0.8rem;
+      background: rgba(51, 154, 240, 0.1);
+      border-radius: 8px;
+      margin: 0.5rem 0;
+    }
+
+    button.run {
+      background: var(--cursor-blue);
+      border: none;
+      color: var(--text-primary);
+      padding: 0.8rem 1.8rem;
+      font-size: 1rem;
+      font-weight: 500;
+      margin-top: 1.5rem;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    button.run:hover {
+      background: #0052cc;
+      transform: translateY(-1px);
+    }
+
+    button.run::before {
+      content: "▶";
+      font-size: 0.9rem;
+    }
+
+    footer {
+      margin-top: 2rem;
+      padding: 4rem 0 0 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background: var(--cursor-dark);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
+      height: 200px;
+    }
+
+    .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      height: 100%;
+    }
+
+    .footer-text {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-socials {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .social-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .social-link:hover {
+      color: var(--text-primary);
+      transform: translateY(-2px);
+    }
+
+    .social-link svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    .footer-signature {
+      font-family: 'Recursive', sans-serif;
+      font-size: 8rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      position: absolute;
+      display: block;
+      line-height: 1;
+      background: linear-gradient(to bottom, var(--text-primary) 0%, var(--text-primary) 70%, transparent 70%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      width: 95%;
+      margin-left: auto;
+      margin-right: auto;
+      bottom: -40%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 0 1rem;
+      }
+
+      .container {
+        padding: 8rem 0 1rem 0;
+      }
+
+      nav {
+        padding: 0.8rem 1.2rem;
+        top: 1rem;
+        left: 1rem;
+        right: 1rem;
+        max-width: calc(100% - 2rem);
+      }
+
+      nav h1 {
+        font-size: 1.2rem;
+      }
+
+      nav button {
+        padding: 0.4rem 1rem;
+        font-size: 0.8rem;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+      }
+
+      p {
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+
+      pre {
+        padding: 1rem;
+        font-size: 0.85rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      textarea {
+        padding: 1rem;
+        font-size: 0.9rem;
+        height: 200px;
+      }
+
+      #output {
+        font-size: 0.85rem;
+        min-height: 150px;
+        max-height: 300px;
+      }
+
+      #output::before {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+      }
+
+      #output-content {
+        margin-top: 2.5rem;
+        padding: 0 1rem;
+      }
+
+      button.run {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .footer-signature {
+       /* font-size: 5rem;*/
+        width: 95%;
+      }
+
+      .footer-socials {
+        gap: 1rem;
+      }
+
+      .social-link {
+        font-size: 0.9rem;
+      }
+
+      .social-link svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      section {
+        margin-bottom: 4rem;
+      }
+
+      .quote {
+        padding: 1rem;
+        font-size: 0.95rem;
+      }
+
+      ul li {
+        font-size: 1rem;
+        padding-left: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 7rem 0 1rem 0;
+      }
+
+      nav {
+        padding: 0.6rem 1rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      /*.footer-signature {
+        font-size: 4rem;
+      }*/
+
+      pre {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h1>Kodini</h1>
+    <button onclick="document.getElementById('compiler').scrollIntoView({ behavior: 'smooth' });">Try Kodini</button>
+  </nav>
+
+  <div class="container">
+    <section>
+      <h2>Welcome to Kodini</h2>
+      <p><strong>Kodini</strong> is a fun, modern, and experimental programming language that blends Assamese and English with a sleek, contemporary coding style. It's designed to be expressive, beginner-friendly, and culturally unique — something that feels local but functions globally.</p>
+    </section>
+
+    <section>
+      <h2>About Kodini</h2>
+      <p>Kodini is a fork of JavaScript (JS) — it uses JS at its core, but wraps it with Assamese-influenced syntax to make programming feel more relatable and fun for native Assamese speakers.</p>
+      <p>The syntax of Kodini is easy to understand and brings out the fun side of coding by using familiar Assamese phrases for common programming concepts.</p>
+    </section>
+
+    <section>
+      <h2>Kodini Syntax Reference</h2>
+      <pre>
+let = saa_aitu
+const = saa_aitu
+var = saa_aitu
+true = hosa
+false = misa
+null = khali
+undefined = ase_kintu_kua_nai_ki_ase
+
+if = jodi
+else = nohole
+while = jetia
+for = karone
+break = bhanga
+continue = goi_thaka
+return = ghura
+
+function = kaam_korok
+class = shreni
+new = notun
+this = ei_jon
+extends = dangor_hoi_thake
+super = dangor
+
+&& = Same
+|| = Same
+! = Same
+== = Same
+!= = Same
+> = Same
+< = Same
+>= = Same
+<= = Same
+
+print = likha
+input = kiba_ata_likhua
+import = bhitorole_loi_aan
+try = chesta_kor
+catch = dhori_loo
+throw = urai_diya
+async = aituwe_kori_thak
+await = alop_ro
+      </pre>
+    </section>
+
+    <section>
+      <h2>Made By Bitupan Borah</h2>
+      <p>Kodini is built with love and curiosity by Bitupan Borah, who goes by the name bitz.dev in the coding world. He is a passionate indie developer and modder who enjoys mixing culture, creativity, and code.</p>
+      <p class="quote">"Kodini is just a fun side project I made to bring Assamese and programming closer together — and to show that coding can feel like home too."</p>
+      <p>The project was developed with the help of ChatGPT, used as a creative co-pilot and assistant during development.</p>
+    </section>
+
+    <section>
+      <h2>Why Kodini?</h2>
+      <ul>
+        <li>To make coding more relatable to Assamese learners</li>
+        <li>To experiment with what a fun, expressive coding language could look like</li>
+        <li>To share joy, creativity, and culture through technology</li>
+        <li>To show how JS can be remixed into something that feels local and personal</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Important Note</h2>
+      <p>Kodini is a fun project.</p>
+      <p>There is absolutely no intention to hurt or offend any language, religion, or community.</p>
+      <p>It is made with full respect for Assamese culture and aims to celebrate it in a playful and creative way.</p>
+    </section>
+
+    <section id="compiler">
+      <h2>Try Kodini Online</h2>
+      <textarea id="kodiniCode">saa_aitu x = 5
+jodi (x > 2) {
+  likha("X, 2 tkoi dangor")
+}</textarea>
+      <br>
+      <button class="run" onclick="runKodini()">Run</button>
+      <div id="output">
+        <div id="output-content"></div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-socials">
+        <a href="https://github.com/bitz-dev" target="_blank" rel="noopener noreferrer" class="social-link">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <div class="footer-signature">bitz.dev</div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav bar hide/show on scroll
+    let lastScrollTop = 0;
+    const nav = document.querySelector('nav');
+    const scrollThreshold = 50;
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      
+      if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
+        nav.classList.add('hidden');
+      } else {
+        nav.classList.remove('hidden');
+      }
+      
+      lastScrollTop = scrollTop;
+    });
+
+    const kodiniToJS = (kodini) => {
+      const map = {
+        'saa_aitu': 'let',
+        'hosa': 'true',
+        'misa': 'false',
+        'khali': 'null',
+        'ase_kintu_kua_nai_ki_ase': 'undefined',
+        'jodi': 'if',
+        'nohole': 'else',
+        'jetia': 'while',
+        'karone': 'for',
+        'bhanga': 'break',
+        'goi_thaka': 'continue',
+        'ghura': 'return',
+        'kaam_korok': 'function',
+        'shreni': 'class',
+        'notun': 'new',
+        'ei_jon': 'this',
+        'dangor_hoi_thake': 'extends',
+        'dangor': 'super',
+        'likha': 'console.log',
+        'kiba_ata_likhua': 'prompt',
+        'bhitorole_loi_aan': 'import',
+        'chesta_kor': 'try',
+        'dhori_loo': 'catch',
+        'urai_diya': 'throw',
+        'aituwe_kori_thak': 'async',
+        'alop_ro': 'await'
+      }
+
+      // Split the code into lines
+      const lines = kodini.split('\n');
+      const processedLines = lines.map(line => {
+        // Skip empty lines
+        if (!line.trim()) return line;
+
+        // Process each part of the line, preserving string literals
+        let result = '';
+        let inString = false;
+        let currentString = '';
+        let currentWord = '';
+
+        for (let i = 0; i < line.length; i++) {
+          const char = line[i];
+          
+          if (char === '"' || char === "'") {
+            if (inString) {
+              // End of string
+              result += char + currentString + char;
+              currentString = '';
+              inString = false;
+            } else {
+              // Start of string
+              inString = true;
+              if (currentWord) {
+                result += map[currentWord] || currentWord;
+                currentWord = '';
+              }
+            }
+          } else if (inString) {
+            currentString += char;
+          } else if (/[a-zA-Z_]/.test(char)) {
+            currentWord += char;
+          } else {
+            if (currentWord) {
+              result += map[currentWord] || currentWord;
+              currentWord = '';
+            }
+            result += char;
+          }
+        }
+
+        // Handle any remaining word
+        if (currentWord) {
+          result += map[currentWord] || currentWord;
+        }
+
+        return result;
+      });
+
+      return processedLines.join('\n');
+    }
+
+    const runKodini = () => {
+      const kodiniCode = document.getElementById("kodiniCode").value;
+      const jsCode = kodiniToJS(kodiniCode);
+      const outputContent = document.getElementById("output-content");
+      
+      // Clear previous output
+      outputContent.innerHTML = '';
+      
+      // Add timestamp
+      const timestamp = new Date().toLocaleTimeString();
+      const timestampDiv = document.createElement('div');
+      timestampDiv.className = 'terminal-info';
+      timestampDiv.textContent = `[${timestamp}] Running code...`;
+      outputContent.appendChild(timestampDiv);
+      
+      try {
+        // Create a new console.log function that captures output
+        const logs = [];
+        const originalConsoleLog = console.log;
+        console.log = (...args) => {
+          logs.push(args);
+          originalConsoleLog.apply(console, args);
+        };
+
+        // Execute the code
+        const result = eval(jsCode);
+        
+        // Restore original console.log
+        console.log = originalConsoleLog;
+
+        // Display logs
+        logs.forEach(log => {
+          const logDiv = document.createElement('div');
+          logDiv.className = 'terminal-prompt';
+          logDiv.textContent = log.join(' ');
+          outputContent.appendChild(logDiv);
+        });
+
+        // Display result if any
+        if (result !== undefined) {
+          const resultDiv = document.createElement('div');
+          resultDiv.className = 'terminal-prompt';
+          resultDiv.textContent = `Result: ${result}`;
+          outputContent.appendChild(resultDiv);
+        }
+
+        // Add success message
+        const successDiv = document.createElement('div');
+        successDiv.className = 'terminal-success';
+        successDiv.textContent = '✓ Execution completed successfully';
+        outputContent.appendChild(successDiv);
+      } catch (e) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'terminal-error';
+        errorDiv.textContent = `Error: ${e.message}`;
+        outputContent.appendChild(errorDiv);
+      }
+
+      // Scroll to bottom
+      outputContent.scrollTop = outputContent.scrollHeight;
+    }
+  </script>
+</body>
+</html> 
