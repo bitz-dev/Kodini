@@ -23,6 +23,7 @@
       --success: #51cf66;
       --error: #ff6b6b;
       --info: #339af0;
+      --suggestion: #e0a800;
       --gradient-start: #00ff88;
       --gradient-end: #00ccff;
       --cursor-blue: #0066ff;
@@ -34,6 +35,12 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+    }
+
+    html, body {
+      /* Allow natural vertical scrolling */
+      height: auto;
+      overflow-y: auto;
     }
 
     body {
@@ -49,21 +56,7 @@
       position: relative;
     }
 
-    /* Grain effect */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-      opacity: 0.05;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    nav {
+      nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -140,6 +133,7 @@
       transform: translateY(-1px);
     }
 
+    /* Main content container */
     .container {
       max-width: 800px;
       margin: 0 auto;
@@ -248,6 +242,29 @@
       font-size: 1.5rem;
     }
 
+    /* Suggestion panel styling for auto-completion */
+    .suggestion-panel {
+      position: relative;
+      margin-bottom: 0.5rem;
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      max-height: 150px;
+      overflow-y: auto;
+      font-family: 'Consolas', monospace;
+    }
+    
+    .suggestion-item {
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+    }
+    
+    .suggestion-item:hover,
+    .suggestion-item.active {
+      background-color: var(--cursor-blue);
+      color: var(--text-primary);
+    }
+    
     textarea {
       width: 100%;
       height: 300px;
@@ -262,13 +279,13 @@
       transition: all 0.3s ease;
       line-height: 1.6;
     }
-
+    
     textarea:focus {
       outline: none;
       border-color: var(--cursor-blue);
       box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.2);
     }
-
+    
     #output {
       background: rgba(0, 0, 0, 0.3);
       color: var(--text-primary);
@@ -287,7 +304,7 @@
       margin-left: auto;
       margin-right: auto;
     }
-
+    
     #output::before {
       content: "Terminal";
       position: absolute;
@@ -303,26 +320,26 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       font-weight: 500;
     }
-
+    
     #output-content {
       margin-top: 3rem;
       padding: 0 1.5rem;
       white-space: pre-wrap;
     }
-
+    
     .terminal-prompt {
       color: var(--text-primary);
       margin-bottom: 0.8rem;
       font-family: 'Consolas', monospace;
     }
-
+    
     .terminal-prompt::before {
       content: ">";
       color: var(--cursor-blue);
       margin-right: 0.5rem;
       font-weight: bold;
     }
-
+    
     .terminal-error {
       color: var(--error);
       font-weight: 500;
@@ -331,7 +348,7 @@
       border-radius: 8px;
       margin: 0.5rem 0;
     }
-
+    
     .terminal-success {
       color: var(--success);
       font-weight: 500;
@@ -340,7 +357,7 @@
       border-radius: 8px;
       margin: 0.5rem 0;
     }
-
+    
     .terminal-info {
       color: var(--info);
       font-weight: 500;
@@ -349,7 +366,7 @@
       border-radius: 8px;
       margin: 0.5rem 0;
     }
-
+    
     button.run {
       background: var(--cursor-blue);
       border: none;
@@ -365,17 +382,17 @@
       align-items: center;
       gap: 0.5rem;
     }
-
+    
     button.run:hover {
       background: #0052cc;
       transform: translateY(-1px);
     }
-
+    
     button.run::before {
       content: "▶";
       font-size: 0.9rem;
     }
-
+    
     footer {
       margin-top: 2rem;
       padding: 4rem 0 0 0;
@@ -389,7 +406,7 @@
       margin-right: calc(-50vw + 50%);
       height: 200px;
     }
-
+    
     .footer-content {
       max-width: 800px;
       margin: 0 auto;
@@ -397,7 +414,7 @@
       position: relative;
       height: 100%;
     }
-
+    
     .footer-text {
       color: var(--text-secondary);
       font-size: 0.9rem;
@@ -405,7 +422,7 @@
       position: relative;
       z-index: 1;
     }
-
+    
     .footer-socials {
       display: flex;
       justify-content: center;
@@ -414,7 +431,7 @@
       position: relative;
       z-index: 1;
     }
-
+    
     .social-link {
       color: var(--text-secondary);
       text-decoration: none;
@@ -423,18 +440,18 @@
       align-items: center;
       gap: 0.5rem;
     }
-
+    
     .social-link:hover {
       color: var(--text-primary);
       transform: translateY(-2px);
     }
-
+    
     .social-link svg {
       width: 24px;
       height: 24px;
       fill: currentColor;
     }
-
+    
     .footer-signature {
       font-family: 'Recursive', sans-serif;
       font-size: 8rem;
@@ -454,16 +471,16 @@
       left: 50%;
       transform: translateX(-50%);
     }
-
+    
     @media (max-width: 768px) {
       body {
         padding: 0 1rem;
       }
-
+    
       .container {
         padding: 8rem 0 1rem 0;
       }
-
+    
       nav {
         padding: 0.8rem 1.2rem;
         top: 1rem;
@@ -471,112 +488,108 @@
         right: 1rem;
         max-width: calc(100% - 2rem);
       }
-
+    
       nav h1 {
         font-size: 1.2rem;
       }
-
+    
       nav button {
         padding: 0.4rem 1rem;
         font-size: 0.8rem;
       }
-
+    
       h2 {
         font-size: 1.8rem;
         margin-bottom: 2rem;
       }
-
+    
       p {
         font-size: 1rem;
         line-height: 1.6;
       }
-
+    
       pre {
         padding: 1rem;
         font-size: 0.85rem;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
       }
-
+    
       textarea {
         padding: 1rem;
         font-size: 0.9rem;
         height: 200px;
       }
-
+    
       #output {
         font-size: 0.85rem;
         min-height: 150px;
         max-height: 300px;
       }
-
+    
       #output::before {
         padding: 0.6rem 1rem;
         font-size: 0.8rem;
       }
-
+    
       #output-content {
         margin-top: 2.5rem;
         padding: 0 1rem;
       }
-
+    
       button.run {
         padding: 0.7rem 1.5rem;
         font-size: 0.9rem;
         width: 100%;
         justify-content: center;
       }
-
+    
       .footer-signature {
-       /* font-size: 5rem;*/
+       /* font-size: 5rem; */
         width: 95%;
       }
-
+    
       .footer-socials {
         gap: 1rem;
       }
-
+    
       .social-link {
         font-size: 0.9rem;
       }
-
+    
       .social-link svg {
         width: 20px;
         height: 20px;
       }
-
+    
       section {
         margin-bottom: 4rem;
       }
-
+    
       .quote {
         padding: 1rem;
         font-size: 0.95rem;
       }
-
+    
       ul li {
         font-size: 1rem;
         padding-left: 1.5rem;
       }
     }
-
+    
     @media (max-width: 480px) {
       .container {
         padding: 7rem 0 1rem 0;
       }
-
+    
       nav {
         padding: 0.6rem 1rem;
       }
-
+    
       h2 {
         font-size: 1.5rem;
       }
-
-      /*.footer-signature {
-        font-size: 4rem;
-      }*/
-
+    
       pre {
         font-size: 0.8rem;
       }
@@ -590,17 +603,20 @@
   </nav>
 
   <div class="container">
+    <!-- Welcome Section -->
     <section>
       <h2>Welcome to Kodini</h2>
       <p><strong>Kodini</strong> is a fun, modern, and experimental programming language that blends Assamese and English with a sleek, contemporary coding style. It's designed to be expressive, beginner-friendly, and culturally unique — something that feels local but functions globally.</p>
     </section>
 
+    <!-- About Section -->
     <section>
       <h2>About Kodini</h2>
       <p>Kodini is a fork of JavaScript (JS) — it uses JS at its core, but wraps it with Assamese-influenced syntax to make programming feel more relatable and fun for native Assamese speakers.</p>
       <p>The syntax of Kodini is easy to understand and brings out the fun side of coding by using familiar Assamese phrases for common programming concepts.</p>
     </section>
 
+    <!-- Syntax Reference Section -->
     <section>
       <h2>Kodini Syntax Reference</h2>
       <pre>
@@ -648,6 +664,7 @@ await = alop_ro
       </pre>
     </section>
 
+    <!-- Made By Section -->
     <section>
       <h2>Made By Bitupan Borah</h2>
       <p>Kodini is built with love and curiosity by Bitupan Borah, who goes by the name bitz.dev in the coding world. He is a passionate indie developer and modder who enjoys mixing culture, creativity, and code.</p>
@@ -655,6 +672,7 @@ await = alop_ro
       <p>The project was developed with the help of ChatGPT, used as a creative co-pilot and assistant during development.</p>
     </section>
 
+    <!-- Why Kodini Section -->
     <section>
       <h2>Why Kodini?</h2>
       <ul>
@@ -665,6 +683,7 @@ await = alop_ro
       </ul>
     </section>
 
+    <!-- Important Note Section -->
     <section>
       <h2>Important Note</h2>
       <p>Kodini is a fun project.</p>
@@ -672,8 +691,11 @@ await = alop_ro
       <p>It is made with full respect for Assamese culture and aims to celebrate it in a playful and creative way.</p>
     </section>
 
+    <!-- Try Kodini Online Section with Auto-Completion -->
     <section id="compiler">
       <h2>Try Kodini Online</h2>
+      <!-- Suggestion panel for auto-completion -->
+      <div id="suggestion-panel" class="suggestion-panel" style="display:none;"></div>
       <textarea id="kodiniCode">saa_aitu x = 5
 jodi (x > 2) {
   likha("X, 2 tkoi dangor")
@@ -701,81 +723,175 @@ jodi (x > 2) {
   </footer>
 
   <script>
-    // Nav bar hide/show on scroll
-    let lastScrollTop = 0;
-    const nav = document.querySelector('nav');
-    const scrollThreshold = 50;
+    // Mapping of Kodini keywords to JavaScript equivalents
+    const map = {
+      'saa_aitu': 'let',
+      'hosa': 'true',
+      'misa': 'false',
+      'khali': 'null',
+      'ase_kintu_kua_nai_ki_ase': 'undefined',
+      'jodi': 'if',
+      'nohole': 'else',
+      'jetia': 'while',
+      'karone': 'for',
+      'bhanga': 'break',
+      'goi_thaka': 'continue',
+      'ghura': 'return',
+      'kaam_korok': 'function',
+      'shreni': 'class',
+      'notun': 'new',
+      'ei_jon': 'this',
+      'dangor_hoi_thake': 'extends',
+      'dangor': 'super',
+      'likha': 'console.log',
+      'kiba_ata_likhua': 'prompt',
+      'bhitorole_loi_aan': 'import',
+      'chesta_kor': 'try',
+      'dhori_loo': 'catch',
+      'urai_diya': 'throw',
+      'aituwe_kori_thak': 'async',
+      'alop_ro': 'await'
+    };
 
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    // List of valid keywords (the keys of our mapping)
+    const keywords = Object.keys(map);
+
+    // Get the current token (the word at the caret position in the textarea)
+    const getCurrentToken = (textarea) => {
+      const pos = textarea.selectionStart;
+      const text = textarea.value.substring(0, pos);
+      const match = text.match(/(\w+)$/);
+      return match ? match[1] : '';
+    };
+
+    // Replace the current token with the completed word
+    const setCurrentToken = (textarea, completed) => {
+      const pos = textarea.selectionStart;
+      const textBefore = textarea.value.substring(0, pos);
+      const textAfter = textarea.value.substring(pos);
+      const newTextBefore = textBefore.replace(/(\w+)$/, completed);
+      textarea.value = newTextBefore + textAfter;
+      textarea.selectionStart = textarea.selectionEnd = newTextBefore.length;
+    };
+
+    // Return possible completions for a token
+    const findSuggestions = (token) => {
+      if (!token) return [];
+      return keywords.filter(kw => kw.startsWith(token) && kw !== token);
+    };
+
+    // Update auto-completion suggestions in the suggestion panel
+    const updateSuggestions = () => {
+      const textarea = document.getElementById("kodiniCode");
+      const panel = document.getElementById("suggestion-panel");
+      const token = getCurrentToken(textarea);
+      const suggestions = findSuggestions(token);
       
-      if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
-        nav.classList.add('hidden');
-      } else {
-        nav.classList.remove('hidden');
+      panel.innerHTML = '';
+      if (suggestions.length === 0) {
+        panel.style.display = 'none';
+        return;
       }
       
-      lastScrollTop = scrollTop;
+      panel.style.display = 'block';
+      suggestions.forEach(suggestion => {
+        const div = document.createElement('div');
+        div.className = 'suggestion-item';
+        div.textContent = suggestion;
+        div.addEventListener('mousedown', (e) => {
+          e.preventDefault();
+          setCurrentToken(textarea, suggestion);
+          panel.style.display = 'none';
+          textarea.focus();
+        });
+        panel.appendChild(div);
+      });
+    };
+
+    // Update suggestions when user types
+    const codeArea = document.getElementById("kodiniCode");
+    codeArea.addEventListener('input', updateSuggestions);
+    
+    // Use Tab key for auto-completion
+    codeArea.addEventListener('keydown', (e) => {
+      if (e.key === "Tab") {
+        e.preventDefault();
+        const panel = document.getElementById("suggestion-panel");
+        const token = getCurrentToken(codeArea);
+        const suggestions = findSuggestions(token);
+        if (suggestions.length > 0) {
+          setCurrentToken(codeArea, suggestions[0]);
+          panel.style.display = 'none';
+        }
+      }
     });
 
-    const kodiniToJS = (kodini) => {
-      const map = {
-        'saa_aitu': 'let',
-        'hosa': 'true',
-        'misa': 'false',
-        'khali': 'null',
-        'ase_kintu_kua_nai_ki_ase': 'undefined',
-        'jodi': 'if',
-        'nohole': 'else',
-        'jetia': 'while',
-        'karone': 'for',
-        'bhanga': 'break',
-        'goi_thaka': 'continue',
-        'ghura': 'return',
-        'kaam_korok': 'function',
-        'shreni': 'class',
-        'notun': 'new',
-        'ei_jon': 'this',
-        'dangor_hoi_thake': 'extends',
-        'dangor': 'super',
-        'likha': 'console.log',
-        'kiba_ata_likhua': 'prompt',
-        'bhitorole_loi_aan': 'import',
-        'chesta_kor': 'try',
-        'dhori_loo': 'catch',
-        'urai_diya': 'throw',
-        'aituwe_kori_thak': 'async',
-        'alop_ro': 'await'
+    // Levenshtein distance for typo corrections in terminal output
+    const levenshteinDistance = (a, b) => {
+      const matrix = [];
+      for (let i = 0; i <= b.length; i++) {
+        matrix[i] = [i];
       }
+      for (let j = 0; j <= a.length; j++) {
+        matrix[0][j] = j;
+      }
+      for (let i = 1; i <= b.length; i++) {
+        for (let j = 1; j <= a.length; j++) {
+          if (b.charAt(i - 1) === a.charAt(j - 1)) {
+            matrix[i][j] = matrix[i - 1][j - 1];
+          } else {
+            matrix[i][j] = Math.min(
+              matrix[i - 1][j - 1] + 1,
+              matrix[i][j - 1] + 1,
+              matrix[i - 1][j] + 1
+            );
+          }
+        }
+      }
+      return matrix[b.length][a.length];
+    };
 
-      // Split the code into lines
+    // Generate suggestions for minor typos in Kodini code (to be shown in the terminal)
+    const getSyntaxSuggestions = (code) => {
+      const suggestions = [];
+      const tokenRegex = /\b[a-zA-Z_][a-zA-Z0-9_]*\b/g;
+      const tokens = code.match(tokenRegex) || [];
+      const seen = {};
+      tokens.forEach(token => {
+        if (map[token]) return;
+        Object.keys(map).forEach(keyword => {
+          if (levenshteinDistance(token, keyword) === 1 && !seen[token]) {
+            suggestions.push(`Did you mean "<strong>${keyword}</strong>" instead of "<strong>${token}</strong>"?`);
+            seen[token] = true;
+          }
+        });
+      });
+      return suggestions;
+    };
+
+    // Convert Kodini code to JavaScript code using our keyword mapping
+    const kodiniToJS = (kodini) => {
       const lines = kodini.split('\n');
       const processedLines = lines.map(line => {
-        // Skip empty lines
         if (!line.trim()) return line;
-
-        // Process each part of the line, preserving string literals
         let result = '';
         let inString = false;
         let currentString = '';
         let currentWord = '';
-
         for (let i = 0; i < line.length; i++) {
           const char = line[i];
-          
           if (char === '"' || char === "'") {
             if (inString) {
-              // End of string
-              result += char + currentString + char;
+              result += currentString + char;
               currentString = '';
               inString = false;
             } else {
-              // Start of string
-              inString = true;
               if (currentWord) {
                 result += map[currentWord] || currentWord;
                 currentWord = '';
               }
+              inString = true;
+              result += char;
             }
           } else if (inString) {
             currentString += char;
@@ -789,65 +905,62 @@ jodi (x > 2) {
             result += char;
           }
         }
-
-        // Handle any remaining word
         if (currentWord) {
           result += map[currentWord] || currentWord;
         }
-
         return result;
       });
-
       return processedLines.join('\n');
-    }
+    };
 
+    // Main function to run the Kodini code
     const runKodini = () => {
       const kodiniCode = document.getElementById("kodiniCode").value;
       const jsCode = kodiniToJS(kodiniCode);
       const outputContent = document.getElementById("output-content");
-      
-      // Clear previous output
       outputContent.innerHTML = '';
-      
-      // Add timestamp
       const timestamp = new Date().toLocaleTimeString();
       const timestampDiv = document.createElement('div');
       timestampDiv.className = 'terminal-info';
       timestampDiv.textContent = `[${timestamp}] Running code...`;
       outputContent.appendChild(timestampDiv);
       
+      // Show typo suggestions in the terminal, if any
+      const typoSuggestions = getSyntaxSuggestions(kodiniCode);
+      if (typoSuggestions.length > 0) {
+        typoSuggestions.forEach(suggestion => {
+          const suggestionDiv = document.createElement('div');
+          suggestionDiv.className = 'terminal-info';
+          suggestionDiv.style.background = 'rgba(224, 168, 0, 0.1)';
+          suggestionDiv.style.borderLeft = '3px solid var(--suggestion)';
+          suggestionDiv.style.padding = '0.8rem';
+          suggestionDiv.style.margin = '0.5rem 0';
+          suggestionDiv.innerHTML = suggestion;
+          outputContent.appendChild(suggestionDiv);
+        });
+      }
+      
       try {
-        // Create a new console.log function that captures output
         const logs = [];
         const originalConsoleLog = console.log;
         console.log = (...args) => {
           logs.push(args);
           originalConsoleLog.apply(console, args);
         };
-
-        // Execute the code
         const result = eval(jsCode);
-        
-        // Restore original console.log
         console.log = originalConsoleLog;
-
-        // Display logs
         logs.forEach(log => {
           const logDiv = document.createElement('div');
           logDiv.className = 'terminal-prompt';
           logDiv.textContent = log.join(' ');
           outputContent.appendChild(logDiv);
         });
-
-        // Display result if any
         if (result !== undefined) {
           const resultDiv = document.createElement('div');
           resultDiv.className = 'terminal-prompt';
           resultDiv.textContent = `Result: ${result}`;
           outputContent.appendChild(resultDiv);
         }
-
-        // Add success message
         const successDiv = document.createElement('div');
         successDiv.className = 'terminal-success';
         successDiv.textContent = '✓ Execution completed successfully';
@@ -858,13 +971,38 @@ jodi (x > 2) {
         errorDiv.textContent = `Error: ${e.message}`;
         outputContent.appendChild(errorDiv);
       }
-
-      // Scroll to bottom
+      
+      // Scroll the terminal output to the bottom
       outputContent.scrollTop = outputContent.scrollHeight;
-    }
+    };
+
+    // Hide suggestion panel if clicking outside the textarea
+    document.addEventListener('click', (e) => {
+      if (!document.getElementById("kodiniCode").contains(e.target)) {
+        document.getElementById("suggestion-panel").style.display = 'none';
+      }
+    });
   </script>
 
- <script src="/_vercel/speed-insights/script.js"></script>
+<script>
+// Nav bar hide/show on scroll
+let lastScrollTop = 0;
+const nav = document.querySelector('nav');
+const scrollThreshold = 50; // Adjust this value to control when the navbar hides
 
+window.addEventListener('scroll', () => {
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  
+  if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
+    nav.classList.add('hidden'); // Add hidden class to hide the navbar
+  } else {
+    nav.classList.remove('hidden'); // Remove hidden class to show the navbar
+  }
+  
+  lastScrollTop = scrollTop; // Update last scroll position
+});
+</script>
+
+  <script src="/_vercel/speed-insights/script.js"></script>
 </body>
-</html> 
+</html>
