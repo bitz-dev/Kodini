@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Recursive:wght@400;500;600;700&display=swap" rel="stylesheet">
   <meta name="google-site-verification" content="OtZsmF0o6nyOnQulVcuAJzv4FAR2o9CzsRk3sh0xL9M" />
   <style>
+    /* Your existing CSS styling remains unchanged */
     :root {
       --bg-dark: #0a0a0a;
       --bg-darker: #050505;
@@ -38,7 +39,6 @@
     }
 
     html, body {
-      /* Allow natural vertical scrolling */
       height: auto;
       overflow-y: auto;
     }
@@ -56,7 +56,7 @@
       position: relative;
     }
 
-      nav {
+    nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -133,7 +133,6 @@
       transform: translateY(-1px);
     }
 
-    /* Main content container */
     .container {
       max-width: 800px;
       margin: 0 auto;
@@ -242,7 +241,6 @@
       font-size: 1.5rem;
     }
 
-    /* Suggestion panel styling for auto-completion */
     .suggestion-panel {
       position: relative;
       margin-bottom: 0.5rem;
@@ -391,6 +389,29 @@
     button.run::before {
       content: "▶";
       font-size: 0.9rem;
+    }
+    
+    /* New styling for the AI interaction panel */
+    .ai-panel {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+    }
+    
+    .ai-panel textarea {
+      height: 100px;
+    }
+    
+    .ai-response {
+      margin-top: 1rem;
+      background: rgba(10, 10, 10, 0.8);
+      padding: 1rem;
+      border-radius: 8px;
+      min-height: 50px;
+      font-family: 'Consolas', monospace;
     }
     
     footer {
@@ -545,7 +566,6 @@
       }
     
       .footer-signature {
-       /* font-size: 5rem; */
         width: 95%;
       }
     
@@ -694,7 +714,6 @@ await = alop_ro
     <!-- Try Kodini Online Section with Auto-Completion -->
     <section id="compiler">
       <h2>Try Kodini Online</h2>
-      <!-- Suggestion panel for auto-completion -->
       <div id="suggestion-panel" class="suggestion-panel" style="display:none;"></div>
       <textarea id="kodiniCode">saa_aitu x = 5
 jodi (x > 2) {
@@ -704,6 +723,18 @@ jodi (x > 2) {
       <button class="run" onclick="runKodini()">Run</button>
       <div id="output">
         <div id="output-content"></div>
+      </div>
+    </section>
+    
+    <!-- New AI Assistance Panel Section -->
+    <section id="ai-assistant">
+      <h2>Ask Kodini AI</h2>
+      <div class="ai-panel">
+        <p>Type your question about Kodini and how to code:</p>
+        <textarea id="aiQuestion" placeholder="How do I start a loop in Kodini?"></textarea>
+        <br>
+        <button class="run" onclick="processAIQuery()">Ask AI</button>
+        <div id="aiResponse" class="ai-response"></div>
       </div>
     </section>
   </div>
@@ -722,8 +753,10 @@ jodi (x > 2) {
     </div>
   </footer>
 
+  <!-- Load TensorFlow.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
   <script>
-    // Mapping of Kodini keywords to JavaScript equivalents
+    // Your existing JavaScript code for Kodini auto-completion and code execution
     const map = {
       'saa_aitu': 'let',
       'hosa': 'true',
@@ -753,10 +786,8 @@ jodi (x > 2) {
       'alop_ro': 'await'
     };
 
-    // List of valid keywords (the keys of our mapping)
     const keywords = Object.keys(map);
 
-    // Get the current token (the word at the caret position in the textarea)
     const getCurrentToken = (textarea) => {
       const pos = textarea.selectionStart;
       const text = textarea.value.substring(0, pos);
@@ -764,7 +795,6 @@ jodi (x > 2) {
       return match ? match[1] : '';
     };
 
-    // Replace the current token with the completed word
     const setCurrentToken = (textarea, completed) => {
       const pos = textarea.selectionStart;
       const textBefore = textarea.value.substring(0, pos);
@@ -774,13 +804,11 @@ jodi (x > 2) {
       textarea.selectionStart = textarea.selectionEnd = newTextBefore.length;
     };
 
-    // Return possible completions for a token
     const findSuggestions = (token) => {
       if (!token) return [];
       return keywords.filter(kw => kw.startsWith(token) && kw !== token);
     };
 
-    // Update auto-completion suggestions in the suggestion panel
     const updateSuggestions = () => {
       const textarea = document.getElementById("kodiniCode");
       const panel = document.getElementById("suggestion-panel");
@@ -808,11 +836,9 @@ jodi (x > 2) {
       });
     };
 
-    // Update suggestions when user types
     const codeArea = document.getElementById("kodiniCode");
     codeArea.addEventListener('input', updateSuggestions);
     
-    // Use Tab key for auto-completion
     codeArea.addEventListener('keydown', (e) => {
       if (e.key === "Tab") {
         e.preventDefault();
@@ -826,7 +852,6 @@ jodi (x > 2) {
       }
     });
 
-    // Levenshtein distance for typo corrections in terminal output
     const levenshteinDistance = (a, b) => {
       const matrix = [];
       for (let i = 0; i <= b.length; i++) {
@@ -851,7 +876,6 @@ jodi (x > 2) {
       return matrix[b.length][a.length];
     };
 
-    // Generate suggestions for minor typos in Kodini code (to be shown in the terminal)
     const getSyntaxSuggestions = (code) => {
       const suggestions = [];
       const tokenRegex = /\b[a-zA-Z_][a-zA-Z0-9_]*\b/g;
@@ -869,7 +893,6 @@ jodi (x > 2) {
       return suggestions;
     };
 
-    // Convert Kodini code to JavaScript code using our keyword mapping
     const kodiniToJS = (kodini) => {
       const lines = kodini.split('\n');
       const processedLines = lines.map(line => {
@@ -913,7 +936,6 @@ jodi (x > 2) {
       return processedLines.join('\n');
     };
 
-    // Main function to run the Kodini code
     const runKodini = () => {
       const kodiniCode = document.getElementById("kodiniCode").value;
       const jsCode = kodiniToJS(kodiniCode);
@@ -925,7 +947,6 @@ jodi (x > 2) {
       timestampDiv.textContent = `[${timestamp}] Running code...`;
       outputContent.appendChild(timestampDiv);
       
-      // Show typo suggestions in the terminal, if any
       const typoSuggestions = getSyntaxSuggestions(kodiniCode);
       if (typoSuggestions.length > 0) {
         typoSuggestions.forEach(suggestion => {
@@ -972,36 +993,73 @@ jodi (x > 2) {
         outputContent.appendChild(errorDiv);
       }
       
-      // Scroll the terminal output to the bottom
       outputContent.scrollTop = outputContent.scrollHeight;
     };
 
-    // Hide suggestion panel if clicking outside the textarea
     document.addEventListener('click', (e) => {
       if (!document.getElementById("kodiniCode").contains(e.target)) {
         document.getElementById("suggestion-panel").style.display = 'none';
       }
     });
+
+    // -------------------------------
+    // In-Browser AI Integration Section
+    // -------------------------------
+
+    async function processAIQuery() {
+      const prompt = document.getElementById("aiQuestion").value.trim();
+      const responseElem = document.getElementById("aiResponse");
+      
+      if (!prompt) {
+        responseElem.innerHTML = "<strong>Error:</strong> Please enter a question.";
+        return;
+      }
+      
+      responseElem.innerHTML = "<strong>AI:</strong> Thinking...";
+      
+      try {
+        console.log("Sending request to API...");
+        
+        const res = await fetch("https://kodini-ai.vercel.app/api/ask-ai", {
+          method: "POST",
+          headers: { 
+            "Content-Type": "application/json" 
+          },
+          body: JSON.stringify({ prompt }),
+        });
+        
+        console.log("Response status:", res.status);
+        
+        const data = await res.json();
+        console.log("Response data:", data);
+        
+        if (res.ok && data.reply) {
+          responseElem.innerHTML = "<strong>AI:</strong> " + data.reply;
+        } else {
+          const errorMessage = data.error || "Unknown error occurred";
+          responseElem.innerHTML = "<strong>Error:</strong> " + errorMessage;
+          console.error("API Error:", errorMessage);
+        }
+      } catch (err) {
+        responseElem.innerHTML = "<strong>Error:</strong> Failed to connect to AI service.";
+        console.error("Request error:", err);
+      }
+    }
+
+    // Nav bar hide/show on scroll
+    let lastScrollTop = 0;
+    const nav = document.querySelector('nav');
+    const scrollThreshold = 50; // Adjust this value to control when the navbar hides
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
+        nav.classList.add('hidden');
+      } else {
+        nav.classList.remove('hidden');
+      }
+      lastScrollTop = scrollTop;
+    });
   </script>
-
-<script>
-// Nav bar hide/show on scroll
-let lastScrollTop = 0;
-const nav = document.querySelector('nav');
-const scrollThreshold = 50; // Adjust this value to control when the navbar hides
-
-window.addEventListener('scroll', () => {
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  
-  if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
-    nav.classList.add('hidden'); // Add hidden class to hide the navbar
-  } else {
-    nav.classList.remove('hidden'); // Remove hidden class to show the navbar
-  }
-  
-  lastScrollTop = scrollTop; // Update last scroll position
-});
-</script>
 
   <script src="/_vercel/speed-insights/script.js"></script>
 </body>
