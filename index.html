@@ -8,7 +8,7 @@
   <title>Kodini - Assamese Inspired Coding Language</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Recursive:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Recursive:wght@400;500;600;700&family=Anybody:wght@400;500;600;700;800&family=Special+Gothic+Expanded+One&display=swap" rel="stylesheet">
   <meta name="google-site-verification" content="OtZsmF0o6nyOnQulVcuAJzv4FAR2o9CzsRk3sh0xL9M" />
   <style>
     /* Your existing CSS styling remains unchanged */
@@ -64,21 +64,16 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--cursor-dark);
+      background: #000000;
       color: var(--text-primary);
       line-height: 1.6;
       overflow-x: hidden;
-      background-image: 
-        radial-gradient(circle at 20% 20%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(0, 204, 255, 0.1) 0%, transparent 50%);
       padding: 0 2rem;
       position: relative;
     }
 
     [data-theme="light"] body {
-      background-image: 
-        radial-gradient(circle at 20% 20%, rgba(0, 255, 136, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(0, 204, 255, 0.05) 0%, transparent 50%);
+      background: #000000;
     }
 
     nav {
@@ -89,15 +84,15 @@
       backdrop-filter: blur(10px);
       padding: 0.8rem 2rem;
       position: fixed;
-      top: 2rem;
-      left: 2rem;
-      right: 2rem;
+      top: 1rem;
+      left: 1.5%;
+      right: 1.5%;
       z-index: 999;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 12px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-      max-width: 800px;
+      width: 92%;
       margin: 0 auto;
     }
 
@@ -119,6 +114,7 @@
       letter-spacing: -0.5px;
       color: var(--text-primary);
       transition: transform 0.3s ease;
+      font-family: 'Special Gothic Expanded One', sans-serif;
     }
 
     nav:hover h1 {
@@ -126,13 +122,14 @@
     }
 
     nav button {
-      background: var(--cursor-blue);
+      background: #ffffff;
       border: none;
-      color: var(--text-primary);
+      color: #000000;
       padding: 0.5rem 1.2rem;
       border-radius: 8px;
       font-size: 0.9rem;
       font-weight: 500;
+      font-family: 'Special Gothic Expanded One', sans-serif;
       cursor: pointer;
       transition: all 0.3s ease;
       position: relative;
@@ -160,20 +157,20 @@
     }
 
     nav button:hover {
-      background: #0052cc;
+      background: #f0f0f0;
       transform: translateY(-1px);
     }
 
     .container {
-      max-width: 800px;
+      max-width: 97%;
       margin: 0 auto;
-      padding: 15rem 0 1rem 0;
+      padding: 8rem 0 1rem 0;
       position: relative;
       z-index: 2;
     }
 
     section {
-      margin-bottom: 6rem;
+      margin-bottom: 15rem;
       text-align: left;
       display: flex;
       flex-direction: column;
@@ -188,20 +185,15 @@
       text-align: center;
       position: relative;
       display: block;
-      font-family: 'Recursive', sans-serif;
+      font-family: 'Special Gothic Expanded One', sans-serif;
       background: linear-gradient(to bottom, #ffffff 0%, #ffffff 60%, #000000 100%);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      letter-spacing: -0.5px;
-      width: 100%;
     }
 
     [data-theme="light"] h2 {
-      background: linear-gradient(to bottom, #222222 0%, #222222 60%, #000000 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
+      background: #ffffff;
     }
 
     h2::after {
@@ -212,12 +204,12 @@
       transform: translateX(-50%);
       width: 50px;
       height: 2px;
-      background: linear-gradient(to right, #ffffff, #000000);
+      background: #ffffff;
       transition: width 0.3s ease;
     }
 
     [data-theme="light"] h2::after {
-      background: linear-gradient(to right, #222222, #000000);
+      background: #ffffff;
     }
 
     h2:hover::after {
@@ -233,6 +225,10 @@
       max-width: 800px;
       margin-left: auto;
       margin-right: auto;
+    }
+
+    .welcome-text p, .about-section p, .syntax-section p, .made-by-section p, .important-note-section p, .compiler-section p, .ai-assistant-section p {
+      text-align: center;
     }
 
     pre {
@@ -350,9 +346,6 @@
       font-size: 0.95rem;
       position: relative;
       width: 100%;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
     }
     
     [data-theme="light"] #output {
@@ -428,31 +421,37 @@
     }
     
     button.run {
-      background: var(--cursor-blue);
+      background: #ffffff;
+      color: #000000;
       border: none;
-      color: var(--text-primary);
-      padding: 0.8rem 1.8rem;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
       font-size: 1rem;
       font-weight: 500;
-      margin-top: 1.5rem;
+      font-family: 'Special Gothic Expanded One', sans-serif;
       cursor: pointer;
-      border-radius: 8px;
-      transition: all 0.3s ease;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      transition: all 0.3s ease;
+      margin-bottom: 1rem;
     }
-    
+
+    button.run svg {
+      width: 18px;
+      height: 18px;
+    }
+
     button.run:hover {
-      background: #0052cc;
-      transform: translateY(-1px);
+      background: #f0f0f0;
+      transform: translateY(-2px);
     }
     
-    button.run::before {
+    /* button.run::before {
       content: "▶";
       font-size: 0.9rem;
     }
-    
+     */
     /* New styling for the AI interaction panel */
     .ai-panel {
       max-width: 800px;
@@ -474,7 +473,7 @@
     
     .ai-response {
       margin-top: 1rem;
-      background: rgba(10, 10, 10, 0.8);
+      background: var(--bg-light);
       padding: 1rem;
       border-radius: 8px;
       min-height: 50px;
@@ -659,7 +658,7 @@
       }
     
       section {
-        margin-bottom: 4rem;
+        margin-bottom: 8rem;
       }
     
       .quote {
@@ -691,67 +690,173 @@
       }
     }
 
-    /* Theme toggle button styles */
-    .theme-toggle {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-primary);
-      padding: 0.5rem;
-      width: 36px;
-      height: 36px;
+    /* Welcome section with gradient background */
+    .welcome-section {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      padding: 3rem 2rem 0 2rem;
+      margin-bottom: 15rem;
+      background-color: rgba(0, 0, 0, 0.7);
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      min-height: 120vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .welcome-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('gradient-hero-prerender.avif');
+      background-size: cover;
+      background-position: center;
+      z-index: -2;
+      opacity: 0.8;
+    }
+
+    .welcome-section::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('noise.webp');
+      background-size: 150px;
+      background-repeat: repeat;
+      opacity: 2;
+      z-index: -1;
+      mix-blend-mode: overlay;
+    }
+
+    .welcome-content {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .welcome-text {
+      margin-bottom: 6rem;
+      padding-top: 4rem;
+    }
+
+    .welcome-text h2 {
+      font-size: 3rem;
+      color: #ffffff;
+      background: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      -webkit-text-fill-color: initial;
+    }
+
+    .welcome-text p {
+      font-size: 1.4rem;
+      line-height: 1.8;
+      color: #ffffff;
+    }
+
+    /* VS Code window styling */
+    .vscode-window {
+      background: #1e1e1e;
+      border-radius: 8px 8px 0 0;
+      overflow: hidden;
+      margin-top: auto;
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      transform: translateY(30px);
+    }
+
+    .vscode-titlebar {
+      background: #323233;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+    }
+
+    .vscode-title {
+      color: #cccccc;
+      font-size: 0.9rem;
+      margin-left: 12px;
+    }
+
+    .vscode-controls {
+      display: flex;
+      gap: 10px;
+      margin-right: 12px;
+    }
+
+    .vscode-control {
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
-      cursor: pointer;
+    }
+
+    .vscode-close {
+      background: #ff5f57;
+    }
+
+    .vscode-minimize {
+      background: #febc2e;
+    }
+
+    .vscode-maximize {
+      background: #28c840;
+    }
+
+    .vscode-content {
+      padding: 24px;
+      font-family: 'Consolas', monospace;
+      color: #d4d4d4;
+      font-size: 1.2rem;
+      line-height: 1.8;
+      min-height: 300px;
+    }
+
+    .vscode-line {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 1rem;
-      transition: all 0.3s ease;
+      margin-bottom: 6px;
     }
 
-    .theme-toggle:hover {
-      background: var(--hover);
-      transform: rotate(30deg);
+    .vscode-line-number {
+      color: #858585;
+      min-width: 40px;
+      text-align: right;
+      padding-right: 16px;
+      user-select: none;
     }
 
-    .theme-toggle svg {
-      width: 18px;
-      height: 18px;
-      fill: currentColor;
-      stroke: currentColor;
-    }
-    
-    #sunIcon {
-      color: var(--text-primary);
-      stroke-width: 2;
-    }
-    
-    #sunIcon path:first-child {
-      fill: var(--text-primary);
-    }
-    
-    #moonIcon {
-      color: var(--text-primary);
-      fill: var(--text-primary);
+    .vscode-keyword {
+      color: #569cd6;
     }
 
-    .nav-buttons {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+    .vscode-string {
+      color: #ce9178;
     }
 
-    @media (max-width: 768px) {
-      .theme-toggle {
-        width: 32px;
-        height: 32px;
-        padding: 0.4rem;
-        margin-right: 0.5rem;
-      }
+    .vscode-comment {
+      color: #6a9955;
+    }
 
-      .theme-toggle svg {
-        width: 16px;
-        height: 16px;
-      }
+    .vscode-function {
+      color: #dcdcaa;
+    }
+
+    .vscode-variable {
+      color: #9cdcfe;
+    }
+
+    .vscode-number {
+      color: #b5cea8;
     }
   </style>
 </head>
@@ -759,35 +864,104 @@
   <nav>
     <h1>Kodini</h1>
     <div class="nav-buttons">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <svg id="moonIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
-        </svg>
-        <svg id="sunIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display: none;">
-          <circle cx="12" cy="12" r="4" fill="currentColor"/>
-          <path d="M12 3V5M12 19V21M5 12H3M21 12H19M7.05 7.05L5.636 5.636M18.364 5.636L16.95 7.05M7.05 16.95L5.636 18.364M18.364 18.364L16.95 16.95" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
       <button onclick="document.getElementById('compiler').scrollIntoView({ behavior: 'smooth' });">Try Kodini</button>
     </div>
   </nav>
 
   <div class="container">
     <!-- Welcome Section -->
-    <section>
-      <h2>Welcome to Kodini</h2>
-      <p><strong>Kodini</strong> is a fun, modern, and experimental programming language that blends Assamese and English with a sleek, contemporary coding style. It's designed to be expressive, beginner-friendly, and culturally unique — something that feels local but functions globally.</p>
+    <section class="welcome-section">
+      <div class="welcome-content">
+        <div class="welcome-text">
+          <h2>Welcome to Kodini</h2>
+          <p><strong>Kodini</strong> is a fun, modern, and experimental programming language that blends Assamese and English with a sleek, contemporary coding style. It's designed to be expressive, beginner-friendly, and culturally unique — something that feels local but functions globally.</p>
+        </div>
+        
+        <!-- VS Code Window -->
+        <div class="vscode-window">
+          <div class="vscode-titlebar">
+            <div class="vscode-controls">
+              <div class="vscode-control vscode-close"></div>
+              <div class="vscode-control vscode-minimize"></div>
+              <div class="vscode-control vscode-maximize"></div>
+            </div>
+            <div class="vscode-title">kodini-loop.kdn</div>
+          </div>
+          <div class="vscode-content">
+            <div class="vscode-line">
+              <span class="vscode-line-number">1</span>
+              <span><span class="vscode-comment">// Kodini loop example</span></span>
+            </div>
+            <div class="vscode-line">
+              <span class="vscode-line-number">2</span>
+              <span><span class="vscode-keyword">saa_aitu</span> <span class="vscode-variable">count</span> = <span class="vscode-number">1</span>;</span>
+            </div>
+            <div class="vscode-line">
+              <span class="vscode-line-number">3</span>
+              <span></span>
+            </div>
+            <div class="vscode-line">
+              <span class="vscode-line-number">4</span>
+              <span><span class="vscode-keyword">jetia</span> (<span class="vscode-variable">count</span> <= <span class="vscode-number">5</span>) {</span>
+            </div>
+            <div class="vscode-line">
+              <span class="vscode-line-number">5</span>
+              <span>  <span class="vscode-function">likha</span>(<span class="vscode-string">"Loop iteration: "</span> + <span class="vscode-variable">count</span>);</span>
+            </div>
+            <div class="vscode-line">
+              <span class="vscode-line-number">6</span>
+              <span>  <span class="vscode-variable">count</span>++;</span>
+            </div>
+            <div class="vscode-line">
+              <span class="vscode-line-number">7</span>
+              <span>}</span>
+            </div>
+            <div class="vscode-line">
+              <span class="vscode-line-number">8</span>
+              <span></span>
+            </div>
+            <div class="vscode-line">
+              <span class="vscode-line-number">9</span>
+              <span><span class="vscode-comment">// Check if number is even</span></span>
+            </div>
+            <div class="vscode-line">
+              <span class="vscode-line-number">10</span>
+              <span><span class="vscode-keyword">kaam_korok</span> <span class="vscode-function">isEven</span>(<span class="vscode-variable">num</span>) {</span>
+            </div>
+            <div class="vscode-line">
+              <span class="vscode-line-number">11</span>
+              <span>  <span class="vscode-keyword">ghura</span> <span class="vscode-variable">num</span> % <span class="vscode-number">2</span> === <span class="vscode-number">0</span>;</span>
+            </div>
+            <div class="vscode-line">
+              <span class="vscode-line-number">12</span>
+              <span>}</span>
+            </div>
+            <div class="vscode-line">
+              <span class="vscode-line-number">13</span>
+              <span></span>
+            </div>
+            <div class="vscode-line">
+              <span class="vscode-line-number">14</span>
+              <span><span class="vscode-comment">// Generate random number</span></span>
+            </div>
+            <div class="vscode-line">
+              <span class="vscode-line-number">15</span>
+              <span><span class="vscode-keyword">kaam_korok</span> <span class="vscode-function">random</span>(<span class="vscode-variable">min</span>, <span class="vscode-variable">max</span>) {</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- About Section -->
-    <section>
+    <section class="about-section">
       <h2>About Kodini</h2>
       <p>Kodini is a fork of JavaScript (JS) — it uses JS at its core, but wraps it with Assamese-influenced syntax to make programming feel more relatable and fun for native Assamese speakers.</p>
       <p>The syntax of Kodini is easy to understand and brings out the fun side of coding by using familiar Assamese phrases for common programming concepts.</p>
     </section>
 
     <!-- Syntax Reference Section -->
-    <section>
+    <section class="syntax-section">
       <h2>Kodini Syntax Reference</h2>
       <pre>
 let = saa_aitu
@@ -824,6 +998,7 @@ super = dangor
 <= = Same
 
 print = likha
+alert = hotorko_bani
 input = kiba_ata_likhua
 import = bhitorole_loi_aan
 try = chesta_kor
@@ -835,7 +1010,7 @@ await = alop_ro
     </section>
 
     <!-- Made By Section -->
-    <section>
+    <section class="made-by-section">
       <h2>Made By Bitupan Borah</h2>
       <p>Kodini is built with love and curiosity by Bitupan Borah, who goes by the name bitz.dev in the coding world. He is a passionate indie developer and modder who enjoys mixing culture, creativity, and code.</p>
       <p class="quote">"Kodini is just a fun side project I made to bring Assamese and programming closer together — and to show that coding can feel like home too."</p>
@@ -843,7 +1018,7 @@ await = alop_ro
     </section>
 
     <!-- Why Kodini Section -->
-    <section>
+    <section class="why-kodini-section">
       <h2>Why Kodini?</h2>
       <ul>
         <li>To make coding more relatable to Assamese learners</li>
@@ -854,7 +1029,7 @@ await = alop_ro
     </section>
 
     <!-- Important Note Section -->
-    <section>
+    <section class="important-note-section">
       <h2>Important Note</h2>
       <p>Kodini is a fun project.</p>
       <p>There is absolutely no intention to hurt or offend any language, religion, or community.</p>
@@ -862,7 +1037,7 @@ await = alop_ro
     </section>
 
     <!-- Try Kodini Online Section with Auto-Completion -->
-    <section id="compiler">
+    <section id="compiler" class="compiler-section">
       <h2>Try Kodini Online</h2>
       <div id="suggestion-panel" class="suggestion-panel" style="display:none;"></div>
       <textarea id="kodiniCode">saa_aitu x = 5
@@ -870,20 +1045,31 @@ jodi (x > 2) {
   likha("X, 2 tkoi dangor")
 }</textarea>
       <br>
-      <button class="run" onclick="runKodini()">Run</button>
+      <button class="run" onclick="runKodini()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        Run
+      </button>
       <div id="output">
         <div id="output-content"></div>
       </div>
     </section>
     
     <!-- New AI Assistance Panel Section -->
-    <section id="ai-assistant">
+    <section id="ai-assistant" class="ai-assistant-section">
       <h2>Ask Kodini AI</h2>
       <div class="ai-panel">
         <p>Type your question about Kodini and how to code:</p>
         <textarea id="aiQuestion" placeholder="How do I start a loop in Kodini?"></textarea>
         <br>
-        <button class="run" onclick="processAIQuery()">Ask AI</button>
+        <button class="run" onclick="processAIQuery()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 16v-4M12 8h.01"></path>
+          </svg>
+          Ask AI
+        </button>
         <div id="aiResponse" class="ai-response"></div>
       </div>
     </section>
@@ -927,6 +1113,7 @@ jodi (x > 2) {
       'dangor_hoi_thake': 'extends',
       'dangor': 'super',
       'likha': 'console.log',
+      'hotorko_bani': 'alert',
       'kiba_ata_likhua': 'prompt',
       'bhitorole_loi_aan': 'import',
       'chesta_kor': 'try',
@@ -1212,69 +1399,5 @@ jodi (x > 2) {
   </script>
 
   <script src="/_vercel/speed-insights/script.js"></script>
-
-  <script>
-    // Theme toggle functionality
-    const themeToggle = document.getElementById('themeToggle');
-    const moonIcon = document.getElementById('moonIcon');
-    const sunIcon = document.getElementById('sunIcon');
-    
-    // Check for saved theme preference or use default
-    const getTheme = () => {
-      return localStorage.getItem('theme') || 'dark';
-    };
-    
-    // Apply the current theme
-    const applyTheme = (theme) => {
-      document.documentElement.setAttribute('data-theme', theme);
-      if (theme === 'light') {
-        moonIcon.style.display = 'block';
-        sunIcon.style.display = 'none';
-      } else {
-        moonIcon.style.display = 'none';
-        sunIcon.style.display = 'block';
-      }
-    };
-    
-    // Initialize theme
-    applyTheme(getTheme());
-    
-    // Toggle theme when button is clicked
-    themeToggle.addEventListener('click', () => {
-      const currentTheme = getTheme();
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      localStorage.setItem('theme', newTheme);
-      applyTheme(newTheme);
-    });
-  </script>
-
-  <!-- Light theme fixes -->
-  <script>
-    // Add light theme fixes for headers and AI response
-    const addLightThemeFixes = () => {
-      const style = document.createElement('style');
-      style.id = 'light-theme-fixes';
-      style.textContent = `
-        [data-theme="light"] .ai-response {
-          color: #222222;
-        }
-        
-        [data-theme="light"] h2 {
-          background: linear-gradient(to bottom, #222222 0%, #222222 60%, #000000 100%);
-          -webkit-background-clip: text;
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-        
-        [data-theme="light"] h2::after {
-          background: linear-gradient(to right, #222222, #000000);
-        }
-      `;
-      document.head.appendChild(style);
-    };
-    
-    // Add the fixes on page load
-    addLightThemeFixes();
-  </script>
 </body>
 </html>
